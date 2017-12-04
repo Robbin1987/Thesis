@@ -1,0 +1,147 @@
+\chapter{Research Proposal}
+\label{chap:Research Proposa}
+
+%\ifpdf
+ %   \graphicspath{{Chapter1/Figs/Raster/}{Chapter1/Figs/PDF/}{Chapter1/Figs/}}
+%\else
+ %   \graphicspath{{Chapter1/Figs/Vector/}{Chapter1/Figs/}}
+%\fi
+
+
+\section{Introduction}
+Reasoning about program code without actually executing it, that is what static program analysis tools do. On execution, it automatically searches for lexical, syntactic or semantics mistakes. It has great attention of academics and the industry, because of the added value that these analyzers have to maintain the quality of the code. Through the decades the analyzers evolved from simple lexical checkers to tools that contain state-of-the-art verification engines. 
+\par Despite the advantages it is not consequently used by developers because of various reasons \cite{Joh13}. One of the reasons is that tools present their results poorly and in a way that does not give enough information to understand what and why it's a problem. Many have in common that a textual representation is used to inform the user about possible bugs. In case of having long lists of bugs users lose the overview and stop using it. Therefore tool output and result understandability is important for developers.
+\par One way of increasing the understandability is by visualization. Several investigations \cite{Ump06, Cor11}, outside the research area of static program analysis, have been performed and concluded that visualizing information contributes to a better understanding of code structures, execution traces or other kind of artifacts. These tools provide a kind of visualization by using colors to highlight different kind of error types or by marking source lines that are part of an execution trace. The disadvantages of these tools are: closed-source, supports only specific types of errors and not user-supplied assertions and their functionality is often limited to only bug analysis or visualization.  
+\par By combining more advanced visualization techniques and an open-source state-of-the-art static analysis tool the next step to increase usage can be set. 
+\par The main purpose of this research is to check if visualization can be applied on gathered information from an open-source static analysis tool to improve bug pinpointing and understanding.
+
+%The primary security risk is brought upon us from vulnerabilities in software which is then utilized by malicious software.
+%Malicious software is also known as \gls{malware}.
+%\citeauthor{mcgraw2000attacking} \cite{mcgraw2000attacking} define malicious code as \emph{\textquote{any code added, changed, or removed from a software system in order to %intentionally cause harm or subvert the intended function of the system.}}
+
+%\begin{figure}[hbtp!]
+%    \centering
+%    \subfigure[Centralized botnet topology.]{
+%        \includegraphics[scale=0.4]{BotnetCentralized}
+ %       \label{fig:CentralizedBotnetTopology}
+%    }
+%    \hfill
+%    \subfigure[Multi-Server botnet topology.]{
+%        \includegraphics[scale=0.3]{BotnetMultiServer}
+%        \label{fig:MultiServerBotnetTopology}
+%    }
+%    \hfill
+%    \subfigure[Hierarchical botnet topology.]{
+%        \includegraphics[scale=0.4]{BotnetHierarchical}
+ %       \label{fig:HierarchicalBotnetTopology}
+%    }
+%\hfill
+%    \subfigure[P2P botnet topology.]{
+ %       \includegraphics[scale=0.4]{BotnetP2P}
+ %       \label{fig:P2PBotnetTopology}
+%    }
+%    \caption{Botnet communication topology.}
+ %   \label{fig:BotnetCommunicationTopology}
+%\end{figure}
+
+
+\section{Research Context}
+This section gives more background on related research areas where visualisation is a more common technique and differences in the applied methodologies.
+
+Visualization has proven to be an useful technique when it comes to improving understandability. It’s strength can be found in its ability to comprehend huge amounts of data. When comparing applied methodologies the main process is quite similar, see figure 1. The differences are rather small and can be found in the used information sources, filtering of specific data and how the data set is visualized. The visualization is rendered by using graphical objects, which represent the data set. These graphical objects vary in form to visualize difference between similar objects.
+
+A research area where visualization is applied is software evolution. The evolution of a software project contains a tremendously amount of information that can be searched. Information sources that are used in this area to contribute to the visualization are, structural information computed from the source code, evolutionary information retrieved from CVS log files or Bugzilla problem reports. BugCrawler [5] is such a tool that uses these kinds of information to provide an visualization to support the understanding of the evolution of the software. In one overview it gives insight in the number of developers who worked on the software, on which module, how bugs are distributed and other kind of facts. The visualization is achieved by using graphical objects that differs in the length and width to represent the extracted data. Here the surface of the object visualizes, in an abstract manner, the number of developers. The bigger the surface, the more developers worked on the same module.  Additional information is visualized by using Arrows between these objects to represent a tree view of the directory structure.
+ClonEvol [6] on the other hand provides insight in file, scope structures and clone relations. As information source the file changes between software versions from the versioning system is obtained. For the visualization of the data set radial tree views are used. Inside the tree view different colors are applied to represent addition, modification or deletion of clones. By comparing trees of software versions facts are revealed about at which state the most refactoring was performed or in which files the most changes occurred. As mentioned earlier, while both tools address different points of interests, use different information sources and graphical objects for the visualization, the applied methodology is the same. Mine information sources, extract and filter data, convert data to a visualization by using graphical objects..
+
+While visualization is not yet common in the area of bug pinpointing, various ways of visualizing have been presented. Highlighting the code that contains the bug and add comments explaining why it’s a bug is a visualization method, applied by the Clang Static analyzer []. To render the visualization, HTML files are created containing the complete source code and the additional comments. Xcode, which is an IDE with the Clang Static analyzer integrated applies additionally arrows to visualize the control flow of the error trace, within the function, to the bug location.
+
+Highlighting of code is a common visualization technique to inform the user that something is going on with that particular line of code. Where the Clang Static analyzer highlights a detected bug the tool Tarantula, developed by Jones et al. [8] uses the highlighting to visualize the execution path of a test case or test suite. The applied coloring represents it the test case was passed or failed. Tarantula is merely a visualization tool, because it requires an input file with information for the visualization. This input file must be constructed in a pre-defined format and contains the test case ID, the line numbers of its execution path and the test result, which is pass or fail. Applying different colors for the highlighting is also performed by the Polyspace tool [], where different colors represent different error types. 
+
+Using call graphs is another technique to visualize how function calls interact with each other and expresses in which order the calls are executed. It supports developers in staying oriented while exploring the code bases and increases understandability. LaToza et al. [9] developed a tool called REACHER. REACHER is designed to help developers in understanding and navigate the control flow to answer more effectively reachability questions and to stay oriented. It searches the call graph on entering a function name in the search field and visualizes all possible paths to that particular function. The visualized paths are constructed in a tree view where function names point to each other to show its call flow. EXTRAVIS, developed by Cornelissen et al. [10] uses a different visualization technique to provide similar information as REACHER, but now extracted from an execution trace. It uses an circulair view with hierarchical edge bundles [11]. By visually bundling relations together it helps to decreases the growth of visual clutter caused by large traces.
+
+None of the tools available in the literature combines the latest techniques on software verification with a visualization functionality to improve bug-localization.
+
+\section{Research Assignment}
+This research aims to improve speed and easiness pinpointing bugs. Locating bugs is the most difficult part and a time-consuming task of the debugging process. Nowadays developers still spend 35\% to 50\% of their development time on debugging. While automation and tool support seems the holy grail in decreasing this time has a recent study [1] shown that this may not be the case. The concept of automation is still valid, but it contains gaps. In order for developers to use a tool certain criteria must be met. [1] covered this criteria by creating categories. Two of these categories are Tool Output and Result Understandability. 14 of the interviewed people had a negative comment that was placed in the Tool Output category and expressed that the poorly presented output had a negative impact on the usage of static analysis tools. For result understandability this increased to 19 negative comments where the majority felt that that found bugs are not presented in a way that gives enough information for them to asses what the problem is and why it's a problem. 
+\subsection{Research questions}
+One way to overcome this is by creating a more user-friendly and intuitive presentation of the output through visualization. In this study we want to find an answer to the following question: 
+\newline
+\newline
+Can visualization be applied within static analysis tools to improve bug pinpointing?
+\newline
+\newline
+This question is further divided into a number of sub-questions:
+\begin{itemize}
+\item Is the static analysis tool extensible?
+  \item What kind of information does the static analysis tool provide that can be used for visualization?
+  \item What kind of errors can be visualized by the added visualization extension?
+  \item Does the visualization improve bug pinpointing?
+\end{itemize}
+To answer the research questions the static analysis tool SeaHorn is selected. SeaHorn has similar issues with respect to tool output and result understandability. In case of failing assertions a counter-example is generated. These counter-examples can be converted by SeaHorn into an executable, such that the counter-example can be executed in a debugger. The drawback on this approach is that it requires extensive manual labour with a debugger to find out what the problem is and additional labour is required to find out why it’s a problem. Furthermore, there exist no direct relationship with the source code to increase understandability. 
+\section{Research Methodology}
+The research will be based on the design science research (DSR) methodology [12]. See figure 2 of the process followed by DSR. 
+The process consist of several steps. Each step will be discussed in the following sub-chapters.
+\subsection{Awareness of the problem}
+The problem is described in the chapter Research Assignment. This research proposal is the output of this process step.
+\subsection{Suggestion}
+The suggestion of the solution to the problem is described in the chapter Research Contribution. A proof of concept will be created to demonstrate the feasibility of this research. The proof of concept will address the risks found during the risk analysis to increase the feasibility and will cover the major functionalities. 
+\subsection{Development}
+The proof of concept will be further developed and implemented into a prototype. Knowledge gathered from the development of the proof of concept will be used as input for this step. The output of this step is the extension to the static analysis tool. To demonstrate the working of the extension sample code will be provided and visualization opportunities will be implemented, as a set of HTML files, to show its working. The HTML files are constructed as the improved artifacts for bug pinpointing.
+\subsection{Evaluation / Conclusion}
+In this step the evaluation and the conclusion step is combined.  A small survey will be conducted under developers to evaluate if the visualization extension leads to easier bug pinpointing and improved understandability of the bug. Research questions will be answered based on the extension and the generated artifacts. 
+\section{Scope}
+The scope of this research is limited, because of the available time. Therefore some aspects will not be focussed on and choices are made to keep it within time.
+\begin{itemize}
+\item As static analysis tool is the SeaHorn framework selected, because of its modular design, extensibility and having support for various verification engines.
+\item No changes or additions will be made to the static analysis tool to improve bug detection.
+\item No comparison is performed between other static analysis tools to verify if it can be extended with visualization functionalities.
+\item The extension depends heavily on the creation of the call graph. Call graphs must be complete and accurate to be useful. This restricts the usage of function pointers, because it allows indirect calls.
+\item The call graph is restricted to function calls only and do not provide basic block information. This limits the level of detail on bug localization. 
+\end{itemize}
+\section{Research Contribution}
+The contribution is an extension to the SeaHorn framework that eliminates the manual process of stepping through the code to reach the area of interest. This extension enables visualisation opportunities of the counter-example, which allows easier and faster bug localization. With the visualization, no specific debugger  knowledge is required. The visual representation on the source code can significantly enhance its understanding and reduce the debugging cost in contrary to the textual representation of the executable execution. \newline \newline
+The contribution consists of two classes. These classes are executed when verification by the framework is performed. \newline \newline
+The proposed classes:
+\begin{itemize}
+\item a class that generates the call-graph from the provided source code.
+\item a class which maps the generated trace from the verification engine to the call-graph and modify the original source code with a visualization of its execution path.
+\item a class that generates a set of HTML files for presenting the visualization
+\end{itemize}
+\section{Risk Analysis}
+This section of the proposal identifies the risks the research can encounter and the related mitigation steps. \newline \newline
+The followings risks are classified as major risks: \newline \newline
+\textbf{Feasibility:} \newline
+To validate the feasibility of this research a proof of concept will be created to reduce major risks. \newline
+\textbf{Applicability:} \newline
+The applicability of the extension could be low because of several reasons: \newline
+\begin{itemize}
+\item the extension is written within the LLVM framework and therefore limited to this framework.
+\item the gathered information for visualization uses specific information generated by the verification engine build into the static analysis tool.
+\end{itemize}
+However, the applicability of incorporating visualization with static analysis tools to improve bug pinpointing can be applied in general. \newline \newline
+\textbf{Compiler configuration:}\newline
+To use and compile the source code of the selected static analysis tool a specific configuration of compiler tools is required. If it’s not possible to compile the source a mitigation step is to select a different open-source static analysis tool. \newline \newline
+\textbf{Information extraction:} \newline
+To construct a visualization information must be created or extracted from the static analysis tool. If not enough information can be collected, e.g the execution trace to the bug location, a mitigation step is to select a different open-source static analysis tool.
+\section{Planning}
+This research contains several major milestones. These milestones will be used as tasks within the planning.  \newline \newline
+
+\begin{tabular}{ | l | l | l | l |}
+\hline
+\textbf{Task description} \\ \hline
+Setup build environment \\ \hline
+Experiment with the static analysis framework \\ \hline
+\textit{Proof of concept} \\ \hline
+Develop the call graph generation of the source code and extend the command line \\ arguments with the visualization execution \\ \hline
+Develop the mapping of the bug execution trace to the call graph \\ \hline
+Develop the generation of HTML files containing the visualization \\ \hline
+\textit{Prototype} \\ \hline
+Improve the call graph generation of the source code and extend the command line \\ arguments with the visualization execution \\ \hline
+Improve the mapping of the bug execution trace to the call graph \\ \hline
+Improve the generation of HTML files containing the visualization \\ \hline
+\textit{Thesis} \\ \hline
+Finalizing thesis \\ \hline
+Creation of presentation \\ \hline
+
+
+\end{tabular}
